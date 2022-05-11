@@ -43,19 +43,37 @@
             <div class="col-lg-8 col-md-10 comment" style="padding-top: 80px;">
 
                 {% for x in comments %}
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="commenterImage">
+                        <img src="{{ x.author.email | gravatar }}"/>
+                        </div>
+                      </td>
+                      <td style="padding-left: 30px">
+                        <div class="commentText">
+                        <p>{{x.body | safe}}</p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td style="padding-left: 30px">
+                        <span class="date sub-text">{{x.author.name}}
+                        {% if not current_user.is_anonymous and (current_user.id == x.author.id
+                        or current_user.id == 1) %}
+                        <a href="{{url_for('delete_comment', comment_id=x.id) }}">✘</a>
+                        {% endif %}
+                        </span>
+                        <hr>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
 
-                    <div class="commenterImage">
-                      <img src="{{ x.author.emasil | gravatar }}"/>
-                    </div>
-                    <div class="commentText">
-                      <p>{{x.body | safe}}</p>
-                      <span class="date sub-text">{{x.author.name}}</span>
-                      {% if not current_user.is_anonymous and (current_user.id == x.author.id
-                      or current_user.id == 1) %}
-                          <a href="{{url_for('delete_comment', comment_id=x.id) }}">✘</a>
-                      {% endif %}
-                    </div>
-                    <hr>
+
 
                 {% endfor %}
 
