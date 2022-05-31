@@ -14,7 +14,7 @@ import os
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = '353f02ad25ad2f3de7e302206400f093'
 ckeditor = CKEditor(app)
 Bootstrap(app)
 login_manager = LoginManager()
