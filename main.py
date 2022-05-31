@@ -10,8 +10,6 @@ from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
-import os
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '353f02ad25ad2f3de7e302206400f093'
