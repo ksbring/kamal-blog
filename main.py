@@ -74,20 +74,20 @@ class Comment(db.Model):
 
 
 def mail_sender(message):
-    # try:
-    my_email = os.environ.get('EMAIL_ID')
-    my_password = os.environ.get('PASSWORD')
-    to_email = os.environ.get('TO_EMAIL')
+    try:
+        my_email = os.environ.get('EMAIL_ID')
+        my_password = os.environ.get('PASSWORD')
+        to_email = os.environ.get('TO_EMAIL')
 
-    with smtplib.SMTP(host='smtp.mail.yahoo.com', port=587) as session:
-        session.starttls()
-        session.login(my_email, my_password)
-        session.sendmail(my_email, to_email, f'Subject: New Blog Message Received'
-                                             f'\n\n{message}')
-        return f'Your message has been sent successfully.'
+        with smtplib.SMTP(host='smtp.mail.yahoo.com', port=587) as session:
+            session.starttls()
+            session.login(my_email, my_password)
+            session.sendmail(my_email, to_email, f'Subject: New Blog Message Received'
+                                                 f'\n\n{message}')
+            return f'Your message has been sent successfully.'
 
-    # except:
-    #     return f'An error has occurred on the server side.'
+    except:
+        return f'An error has occurred on the server side.'
 
 
 def admin_only(func):
