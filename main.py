@@ -170,6 +170,7 @@ def show_post(post_id):
             )
             db.session.add(comment)
             db.session.commit()
+            return redirect(url_for(show_post(post_id)))
 
     comments = Comment.query.filter_by(parent_post=post_id).all()
     return render_template("post.html", post=requested_post,
