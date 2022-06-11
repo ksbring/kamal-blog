@@ -8,9 +8,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
+from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm, ContactForm
 from flask_gravatar import Gravatar
 import os
+import smtplib
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SKEY')
@@ -69,7 +70,24 @@ class Comment(db.Model):
     blog_post = relationship("BlogPost", back_populates="comments")
 
 
-#db.create_all()
+# db.create_all()
+
+
+def mail_sender(message):
+    try:
+        my_email = os.environ.get('EMAIL_ID')
+        my_password = os.environ.get('PASSWORD')
+        to_email = os.environ.get('TO_EMAIL')
+
+        with smtplib.SMTP(host='smtp.mail.yahoo.com', port=587) as session:
+            session.starttls()
+            session.login(my_email, my_password)
+            session.sendmail(my_email, to_email, f'Subject: New Blog Message Received'
+                                                 f'\n\n{message}')
+            return f'Your message has been sent successfully.'
+
+    except:
+        return f'An error has occurred on the server side.'
 
 
 def admin_only(func):
@@ -183,9 +201,19 @@ def add_new_post():
     return render_template("make-post.html", form=form, is_edit=False)
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
-    return render_template("contact.html")
+    form = ContactForm()
+    if request.method == "POST":
+        msg = f"""
+    Name: {request.form['name']}\n
+    Email: {request.form['email']}\n
+    Phone Number: {request.form['phone_number']}\n
+    Message: {request.form['message']}
+        """
+        flash(mail_sender(msg))
+        return redirect(url_for("contact"))
+    return render_template("contact.html", form=form)
 
 
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
