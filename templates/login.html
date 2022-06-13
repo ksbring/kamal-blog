@@ -31,7 +31,28 @@
             {% endif %}
           {% endwith %}
         </div>
-        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+
+        <form name="loginForm" id="loginform" action="{{ url_for('login') }}" method="POST">
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Email Address</label>
+                {{ form.email(class="form-control",placeholder="Email") }}
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Password</label>
+              {{ form.password(class="form-control",placeholder="Password") }}
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <br>
+          <div id="success"></div>
+          {{ form.submit(class="btn btn-primary") }}
+        </form>
+
+
       </div>
     </div>
   </div>

@@ -97,7 +97,6 @@ def admin_only(func):
             abort(403)
         else:
             return func(*args, **kwargs)
-
     return inner
 
 
@@ -108,7 +107,7 @@ def load_user(user_id):
 
 @app.route('/')
 def get_all_posts():
-    posts = BlogPost.query.all()
+    posts = BlogPost.query.all()[::-1]
     return render_template("index.html", all_posts=posts)
 
 
@@ -170,7 +169,6 @@ def show_post(post_id):
             )
             db.session.add(comment)
             db.session.commit()
-            return redirect(url_for(show_post(post_id)))
 
     comments = Comment.query.filter_by(parent_post=post_id).all()
     return render_template("post.html", post=requested_post,
@@ -183,7 +181,7 @@ def about():
 
 
 @app.route("/new-post", methods=["GET", "POST"])
-@admin_only
+@login_required
 def add_new_post():
     form = CreatePostForm()
     if form.validate_on_submit():

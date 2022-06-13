@@ -32,7 +32,34 @@
           {% endwith %}
         </div>
 
-       {{ wtf.quick_form(form, button_map={"submit": "primary"}) }}
+        <form name="registerForm" id="contactForm" action="{{ url_for('register') }}" method="POST">
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Name</label>
+              {{ form.name(class="form-control",placeholder="Name") }}
+<!--              <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">-->
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Email Address</label>
+                {{ form.email(class="form-control",placeholder="Email") }}
+<!--              <input type="email" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter your email address.">-->
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Password</label>
+              {{ form.password(class="form-control",placeholder="Password") }}
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <br>
+          <div id="success"></div>
+          {{ form.submit(class="btn btn-primary") }}
+        </form>
 
       </div>
     </div>
