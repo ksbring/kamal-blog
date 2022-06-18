@@ -26,7 +26,7 @@
             <div class="col-lg-8 col-md-10 mx-auto">
                 {{ post.body|safe }}
                 <hr>
-                {% if current_user.id == 1 %}
+                {% if current_user.id == 1 or current_user.id == post.author_id %}
                 <div class="clearfix">
                     <a class="btn btn-primary float-right" href="{{url_for('edit_post', post_id=post.id)}}">Edit
                         Post</a>
@@ -64,7 +64,8 @@
                         <span class="date sub-text">{{x.author.name}}
                         {% if not current_user.is_anonymous and (current_user.id == x.author.id
                         or current_user.id == 1) %}
-                        <a href="{{url_for('delete_comment', comment_id=x.id) }}">✘</a>
+                        <a style="margin-left:10px; color:red"
+                                href="{{url_for('delete_comment', comment_id=x.id) }}">Delete</a>
                         {% endif %}
                         </span>
                                 <hr>

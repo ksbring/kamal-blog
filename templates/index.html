@@ -32,8 +32,9 @@
           <p class="post-meta">Posted by
             <a href="#">{{post.parent.name}}</a>
             on {{post.date}}
-            {% if current_user.id == 1 %}
-              <a href="{{url_for('delete_post', post_id=post.id) }}">✘</a>
+            {% if current_user.id == 1 or current_user.id == post.author_id %}
+              <a style="margin-left:10px; color:red"
+                 href="{{url_for('delete_post', post_id=post.id) }}">Delete</a>
             {% endif %}
 
           </p>
