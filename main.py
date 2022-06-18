@@ -261,5 +261,5 @@ def delete_comment(comment_id):
         abort(400)
 
 
-if __name__ == "__maina__":
+if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
