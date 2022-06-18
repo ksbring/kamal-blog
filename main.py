@@ -204,12 +204,7 @@ def add_new_post():
 def contact():
     form = ContactForm()
     if request.method == "POST":
-        msg = f"""
-    Name: {request.form['name']}\n
-    Email: {request.form['email']}\n
-    Phone Number: {request.form['phone_number']}\n
-    Message: {request.form['message']}
-        """
+        msg = f"Name: {request.form['name']}\nEmail: {request.form['email']}\nPhone Number: {request.form['phone_number']}\nMessage: {request.form['message']}"
         flash(mail_sender(msg))
         return redirect(url_for("contact"))
     return render_template("contact.html", form=form)
